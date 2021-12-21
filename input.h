@@ -1,228 +1,58 @@
+#ifndef INPUTVALIDATION_H
+#define INPUTVALIDATION_H
+
 #include <iostream>
 #include <algorithm>
 #include <string>
 
-using namespace std;
+// inputChar
+// Precondition: prompt is a string
+// Postcondition: return an input char
+char inputChar(std::string prompt);
 
-//return an input char
-char inputChar(string prompt, string listChars)
-{
-	char input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1A: Invalid input. Must be a character type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		bool bfound = false;
-		for (unsigned c = 0; c < listChars.length(); c++)
-			if (toupper(listChars[c]) == toupper(input))
-			{
-				bfound = true;
-				break;
-			}
-		if (!bfound)
-		{
-			cout << "ERROR-2A: Invalid input. Must be a character from the list of '";
-			for (unsigned c = 0; c < listChars.length() - 1; c++)
-				cout << "'" << static_cast<char>(toupper(listChars[c])) << "', ";
-			cout << "or '" << static_cast<char>(toupper(listChars.back())) << "'.\n";
-		}
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputChar
+// Precondition: prompt is a string, listChars is a list of characters user can input
+// Postcondition: return an input char
+char inputChar(std::string prompt, std::string listChars);
 
-//return an input char of y or n
-char inputChar(string prompt, char yes, char no)
-{
-	char input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1A: Invalid input. Must be a character type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (tolower(input) != tolower(yes) && tolower(input) != tolower(no))
-			cout << "ERROR-2A: Invalid input. Must be a '" << static_cast<char>(toupper(yes)) << "' or '" << static_cast<char>(toupper(no)) << "' character.\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputChar
+// Precondition: prompt is a string, y is a char, n is a char
+// Postcondition: return an input char of y or n
+char inputChar(std::string prompt, char yes, char no);
 
-//return an input char
-char inputChar(string prompt, bool alphaOrDigit)
-{
-	char input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1A: Invalid input. Must be a character type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (alphaOrDigit && !isalpha(input))
-			cout << "ERROR-2A: Invalid input. Must be an alphabet character.\n";
-		else if (!alphaOrDigit && !isdigit(input))
-			cout << "ERROR-2A: Invalid input. Must be a digit character.\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputChar
+// Precondition: prompt is a string, alphaOrDigit is a bool
+// Postcondition: return an input char
+char inputChar(std::string prompt, bool alphaOrDigit);
 
-//return an input char
-char inputChar(string prompt)
-{
-	char input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1A: Invalid input. Must be a character type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputInteger
+// Precondition: prompt is a string
+// Postcondition: return an input integer
+int inputInteger(std::string prompt);
 
-//return an input interger
-int inputInteger(string prompt)
-{
-	int input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1A: Invalid input. Must be an integer type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputInteger
+// Precondition: prompt is a string, posNeg is a bool
+// Postcondition: return an integer where posNeg is positive (true) or negative (false)
+int inputInteger(std::string prompt, bool posNeg);
 
-//return an integer where posNeg is positive (true) or negative (false)
-int inputInteger(string prompt, bool posNeg)
-{
-	int input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-2A: Invalid input. Must be an integer type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (posNeg && input < 0)
-			cout << "ERROR-2A: Invalid input. Must be a positive number.\n";
-		else if (!posNeg && input >= 0)
-			cout << "ERROR-2A: Invalid input. Must be a negative number.\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputInteger
+// Precondition: prompt is a string, startRange and endRange are integers
+// Postcondition: return an input integer within range
+int inputInteger(std::string prompt, int startRange, int endRange);
 
-//return an input integer within range ,start and end
-int inputInteger(string prompt, int startRange, int endRange)
-{
+// inputDouble
+// Precondition: prompt is a string
+// Postcondition: return an input double
+double inputDouble(std::string prompt);
 
-	int input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-3A: Invalid input. Must be an integer type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (!(input >= min(startRange, endRange) && input <= max(startRange, endRange)))
-			cout << "ERROR-3A: Invalid input. Must be from " << startRange << "..." << endRange << ".\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputDouble
+// Precondition: prompt is a string, posNeg is a bool
+// Postcondition: return an input double where posNeg is positive (true) or negative (false)
+double inputDouble(std::string prompt, bool posNeg);
 
-//return an input double
-double inputDouble(string prompt)
-{
-	double input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-1B: Invalid input. Must be a double type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else
-			break;
-	} while (true);
-	return input;
-}
+// inputDouble
+// Precondition: prompt is a string, startRange and endRange are doubles
+// Postcondition: return an input double within range
+double inputDouble(std::string prompt, double startRange, double endRange);
 
-//return a double where posNeg is positive (true) or negative (false)
-double inputDouble(string prompt, bool posNeg)
-{
-	double input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-2B: Invalid input. Must be a double type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (posNeg && input < 0.0)
-			cout << "ERROR-2B: Invalid input. Must be a positive number.\n";
-		else if (!posNeg && input >= 0.0)
-			cout << "ERROR-2B: Invalid input. Must be a negative number.\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
-
-//return an input double within range ,start and end
-double inputDouble(string prompt, double startRange, double endRange)
-{
-	double input;
-	do
-	{
-		cout << prompt;
-		if (!(cin >> input))
-		{
-			cout << "ERROR-3A: Invalid input. Must be a double type.\n";
-			cin.clear();
-			cin.ignore(999, '\n');
-		}
-		else if (!(input >= min(startRange, endRange) && input <= max(startRange, endRange)))
-			cout << "ERROR-3A: Invalid input. Must be from " << startRange << ".." << endRange << ".\n";
-		else
-			break;
-	} while (true);
-	return input;
-}
+#endif // INPUTVALIDATION_H
